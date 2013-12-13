@@ -2,9 +2,15 @@ package prototype
 {
     import feathers.controls.Button;
 
+    import main.Main;
+
+    import starling.display.Image;
+
     import starling.display.Quad;
     import starling.display.Sprite;
     import starling.events.Event;
+    import starling.textures.TextureAtlas;
+    import starling.utils.AssetManager;
 
     public class Prototype extends Sprite
     {
@@ -14,6 +20,9 @@ package prototype
         {
             _quad = new Quad(100, 100);
             this.addChild(_quad);
+
+            var tile:Image = new Image(Main.testAtlas.getTexture("A"));
+            this.addChild(tile);
 
             var button:Button = new Button();
             button.label = "Test";
