@@ -1,4 +1,3 @@
-PrototypeBaseAS3
-================
+LD 28
 
-Base for prototypes.
+Let's see if this will end up good :)
