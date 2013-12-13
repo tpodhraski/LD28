@@ -14,6 +14,9 @@
             <entry library-id="1f440f2e-da82-424b-aa13-cf17df32e46a">
               <dependency linkage="Merged" />
             </entry>
+            <entry library-id="5dbc7b79-e099-49b1-9813-914a9e1b641b">
+              <dependency linkage="Merged" />
+            </entry>
           </entries>
           <sdk name="air_sdk" />
         </dependencies>
@@ -60,6 +63,16 @@
         <properties id="1f440f2e-da82-424b-aa13-cf17df32e46a" />
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/starling.swc!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="5dbc7b79-e099-49b1-9813-914a9e1b641b" />
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/SoundAS.swc!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

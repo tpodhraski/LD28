@@ -9,8 +9,8 @@ package prototype
     import starling.display.Quad;
     import starling.display.Sprite;
     import starling.events.Event;
-    import starling.textures.TextureAtlas;
-    import starling.utils.AssetManager;
+
+    import treefortress.sound.SoundAS;
 
     public class Prototype extends Sprite
     {
@@ -23,6 +23,8 @@ package prototype
 
             var tile:Image = new Image(Main.testAtlas.getTexture("A"));
             this.addChild(tile);
+
+            SoundAS.addSound("beep", new Assets.Beep());
 
             var button:Button = new Button();
             button.label = "Test";
@@ -37,6 +39,8 @@ package prototype
             _quad.rotation += 0.1;
             _quad.x += 10;
             _quad.y += 10;
+
+           SoundAS.play("beep");
         }
     }
 }
