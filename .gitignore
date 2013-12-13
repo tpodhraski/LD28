@@ -1,0 +1,8 @@
+.DS_Store
+bin/*
+
+.idea/scopes/scope_settings.xml
+.idea/workspace.xml
+.idea/dictionaries/Administrator.xml
+.idea/misc.xml
+.idea/vcs.xml

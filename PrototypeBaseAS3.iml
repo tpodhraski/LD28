@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="Flex" version="4">
+  <component name="FlexBuildConfigurationManager" active="PrototypeBaseAS3">
+    <configurations>
+      <configuration name="PrototypeBaseAS3" target-platform="Desktop" pure-as="true" main-class="main.Preloader" output-file="Prototype.swf" output-folder="$MODULE_DIR$/bin">
+        <dependencies target-player="11.9">
+          <entries>
+            <entry library-id="6006cc59-ea71-40a8-93ca-7b0601935352">
+              <dependency linkage="Merged" />
+            </entry>
+            <entry library-id="24e03815-b650-49c0-a0e0-2f9ab41b809b">
+              <dependency linkage="Merged" />
+            </entry>
+            <entry library-id="1f440f2e-da82-424b-aa13-cf17df32e46a">
+              <dependency linkage="Merged" />
+            </entry>
+          </entries>
+          <sdk name="air_sdk" />
+        </dependencies>
+        <compiler-options>
+          <option name="additionalOptions" value="-default-size 720 480 -default-background-color 0x000000" />
+        </compiler-options>
+        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/PrototypeBaseAS3-app.xml" package-file-name="PrototypeBaseAS3" />
+        <packaging-android />
+        <packaging-ios />
+      </configuration>
+    </configurations>
+    <compiler-options />
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/MinimalMobileTheme/source" isTestSource="false" />
+    </content>
+    <orderEntry type="jdk" jdkName="air_sdk" jdkType="Flex SDK Type (new)" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="6006cc59-ea71-40a8-93ca-7b0601935352" />
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/core.swc!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="24e03815-b650-49c0-a0e0-2f9ab41b809b" />
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/feathers.swc!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="1f440f2e-da82-424b-aa13-cf17df32e46a" />
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/starling.swc!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+  </component>
+</module>
+
