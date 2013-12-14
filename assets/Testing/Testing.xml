@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:d0d42ed13acffa9654d1385820fa9e03$ -->
+<!-- $TexturePacker:SmartUpdate:0e713edeae42fe9fd7ce09d8d1616edf$ -->
 <TextureAtlas imagePath="Testing.png">
-    <SubTexture name="0" x="70" y="206" width="32" height="32"/>
-    <SubTexture name="1" x="70" y="172" width="32" height="32"/>
-    <SubTexture name="2" x="36" y="206" width="32" height="32"/>
-    <SubTexture name="3" x="36" y="172" width="32" height="32"/>
-    <SubTexture name="4" x="70" y="138" width="32" height="32"/>
+    <SubTexture name="0" x="138" y="36" width="32" height="32"/>
+    <SubTexture name="1" x="104" y="36" width="32" height="32"/>
+    <SubTexture name="2" x="70" y="36" width="32" height="32"/>
+    <SubTexture name="3" x="36" y="206" width="32" height="32"/>
+    <SubTexture name="4" x="36" y="172" width="32" height="32"/>
     <SubTexture name="5" x="36" y="138" width="32" height="32"/>
-    <SubTexture name="6" x="2" y="206" width="32" height="32"/>
-    <SubTexture name="7" x="2" y="172" width="32" height="32"/>
-    <SubTexture name="8" x="2" y="138" width="32" height="32"/>
-    <SubTexture name="9" x="70" y="104" width="32" height="32"/>
-    <SubTexture name="A" x="36" y="104" width="32" height="32"/>
-    <SubTexture name="B" x="2" y="104" width="32" height="32"/>
-    <SubTexture name="C" x="70" y="70" width="32" height="32"/>
-    <SubTexture name="Cursor" x="104" y="2" width="16" height="28"/>
-    <SubTexture name="D" x="36" y="70" width="32" height="32"/>
-    <SubTexture name="E" x="2" y="70" width="32" height="32"/>
-    <SubTexture name="F" x="70" y="36" width="32" height="32"/>
-    <SubTexture name="G" x="36" y="36" width="32" height="32"/>
-    <SubTexture name="H" x="2" y="36" width="32" height="32"/>
-    <SubTexture name="I" x="70" y="2" width="32" height="32"/>
-    <SubTexture name="J" x="36" y="2" width="32" height="32"/>
+    <SubTexture name="6" x="36" y="104" width="32" height="32"/>
+    <SubTexture name="7" x="36" y="70" width="32" height="32"/>
+    <SubTexture name="8" x="36" y="36" width="32" height="32"/>
+    <SubTexture name="9" x="206" y="2" width="32" height="32"/>
+    <SubTexture name="A" x="172" y="2" width="32" height="32"/>
+    <SubTexture name="B" x="138" y="2" width="32" height="32"/>
+    <SubTexture name="C" x="104" y="2" width="32" height="32"/>
+    <SubTexture name="Cursor" x="172" y="36" width="16" height="28"/>
+    <SubTexture name="D" x="70" y="2" width="32" height="32"/>
+    <SubTexture name="E" x="36" y="2" width="32" height="32"/>
+    <SubTexture name="Evocation" x="2" y="206" width="32" height="32"/>
+    <SubTexture name="F" x="2" y="172" width="32" height="32"/>
+    <SubTexture name="G" x="2" y="138" width="32" height="32"/>
+    <SubTexture name="H" x="2" y="104" width="32" height="32"/>
+    <SubTexture name="I" x="2" y="70" width="32" height="32"/>
+    <SubTexture name="J" x="2" y="36" width="32" height="32"/>
     <SubTexture name="K" x="2" y="2" width="32" height="32"/>
 </TextureAtlas>

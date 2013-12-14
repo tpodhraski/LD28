@@ -20,7 +20,7 @@ package main
 
         public function Main()
         {
-            var theme:MinimalMobileTheme = new MinimalMobileTheme(this, false);
+            var theme:MinimalMobileTheme = new MinimalMobileTheme(this, true);
 
             assets = new AssetManager();
             assets.enqueue(Assets);

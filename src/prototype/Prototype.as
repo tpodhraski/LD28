@@ -1,8 +1,15 @@
 package prototype
 {
+    import Core.Random;
+
     import feathers.controls.Button;
 
     import main.Main;
+
+    import prototype.entities.Evocation;
+    import prototype.ui.EvocationBar;
+
+    import prototype.ui.PlayerDisplay;
 
     import starling.display.Image;
 
@@ -16,31 +23,61 @@ package prototype
     {
         private var _quad:Quad;
 
+        private var _leftScreen:Screen;
+        private var _worldFirst:World;
+        private var _worldSecond:World;
+        private var _rightScreen:Screen;
+        private var _world:WorldSync;
+        private var _level:Level;
+
+        public static var current:int = -1;
+        private var _leftDisplay:PlayerDisplay;
+        private var _rightDisplay:PlayerDisplay;
+        private var _leftEvocation:EvocationBar;
+        private var _rightEvocation:EvocationBar;
+
         public function Prototype()
         {
-            _quad = new Quad(100, 100);
-            this.addChild(_quad);
+            current = WorldSync.FIRST;
 
-            var tile:Image = new Image(Main.testAtlas.getTexture("A"));
-            this.addChild(tile);
+            _level = new Level();
 
-            SoundAS.addSound("beep", new Assets.Beep());
+            _worldFirst = new World(_level);
+            _worldSecond = new World(_level);
+            _world = new WorldSync(_worldFirst, _worldSecond);
+            _world.pickFirstPlayer(Random.intValue(0, 10000));
+            _world.pickSecondPlayer(Random.intValue(0, 10000));
 
-            var button:Button = new Button();
-            button.label = "Test";
-            button.x = 200;
-            button.y = 200;
-            button.addEventListener(Event.TRIGGERED, onTriggered);
-            this.addChild(button);
+            this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
         }
 
-        private function onTriggered(event:Event):void
+        private function onAddedToStage(event:Event):void
         {
-            _quad.rotation += 0.1;
-            _quad.x += 10;
-            _quad.y += 10;
+            this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 
-           SoundAS.play("beep");
+            _leftScreen = new Screen(_worldFirst.first, _worldFirst, _world);
+            _rightScreen = new Screen(_worldSecond.second, _worldSecond, _world);
+            _rightScreen.x = this.stage.stageWidth / 2;
+
+            this.addChild(_leftScreen);
+            this.addChild(_rightScreen);
+
+            _leftDisplay = new PlayerDisplay(_worldFirst.first);
+            _rightDisplay = new PlayerDisplay(_worldSecond.second);
+            _rightDisplay.x = this.stage.stageWidth / 2;
+
+            this.addChild(_leftDisplay);
+            this.addChild(_rightDisplay);
+
+            _leftEvocation = new EvocationBar(_worldFirst.first);
+            _leftEvocation.y = this.stage.stageHeight - 40;
+            this.addChild(_leftEvocation);
+
+
+            _rightEvocation = new EvocationBar(_worldSecond.second);
+            _rightEvocation.x = this.stage.stageWidth / 2;
+            _rightEvocation.y = this.stage.stageHeight - 40;
+            this.addChild(_rightEvocation);
         }
     }
 }

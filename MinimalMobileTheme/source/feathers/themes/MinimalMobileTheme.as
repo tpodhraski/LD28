@@ -57,7 +57,8 @@ package feathers.themes
 	import feathers.controls.renderers.DefaultListItemRenderer;
 	import feathers.controls.text.BitmapFontTextRenderer;
 	import feathers.controls.text.StageTextTextEditor;
-	import feathers.core.DisplayListWatcher;
+    import feathers.controls.text.TextFieldTextRenderer;
+    import feathers.core.DisplayListWatcher;
 	import feathers.core.FeathersControl;
 	import feathers.core.PopUpManager;
 	import feathers.display.Scale9Image;
@@ -438,7 +439,16 @@ package feathers.themes
 			this.setInitializerForClass(Panel, panelInitializer);
 			this.setInitializerForClass(Alert, alertInitializer);
 			this.setInitializerForClass(ScrollContainer, scrollContainerToolbarInitializer, ScrollContainer.ALTERNATE_NAME_TOOLBAR);
-		}
+            this.setInitializerForClass(TextFieldTextRenderer, textfieldTextRenderer);
+
+        }
+
+        protected function textfieldTextRenderer(renderer:TextFieldTextRenderer):void
+        {
+            var format:TextFormat = new TextFormat("Arial", 12, 0xffffff, true);
+
+            renderer.textFormat = format;
+        }
 
 		protected function pageIndicatorNormalSymbolFactory():DisplayObject
 		{

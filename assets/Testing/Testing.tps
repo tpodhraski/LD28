@@ -170,6 +170,7 @@
             <filename>Tiles/D.png</filename>
             <filename>Tiles/E.png</filename>
             <filename>Tiles/F.png</filename>
+            <filename>Markers/Evocation.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
