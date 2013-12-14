@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="Flex" version="4">
-  <component name="FlexBuildConfigurationManager" active="PrototypeBaseAS3">
+  <component name="FlexBuildConfigurationManager" active="Two Souls">
     <configurations>
-      <configuration name="PrototypeBaseAS3" target-platform="Desktop" pure-as="true" main-class="main.Preloader" output-file="Prototype.swf" output-folder="$MODULE_DIR$/bin">
+      <configuration name="Two Souls" pure-as="true" main-class="main.Preloader" output-file="TwoSouls.swf" output-folder="$MODULE_DIR$/bin">
         <dependencies target-player="11.9">
           <entries>
             <entry library-id="6006cc59-ea71-40a8-93ca-7b0601935352">
@@ -23,7 +23,7 @@
         <compiler-options>
           <option name="additionalOptions" value="-default-size 720 480 -default-background-color 0x000000" />
         </compiler-options>
-        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/PrototypeBaseAS3-app.xml" package-file-name="PrototypeBaseAS3" />
+        <packaging-air-desktop />
         <packaging-android />
         <packaging-ios />
       </configuration>

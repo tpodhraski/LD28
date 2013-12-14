@@ -11,7 +11,7 @@ package prototype.entities.runes
     public class RuneJump extends Rune
     {
         public static const title:String = "Jump Rune"
-        public static const description:String = "Produces jump evocation.";
+        public static const description:String = "Produces jump evocation. 10 turns is the base for poduction.";
 
         public static const creates:Class = EvocationJump;
 
@@ -25,12 +25,12 @@ package prototype.entities.runes
 
         public static function deactivateBonus(player:Player, logic:RuneLogic):void
         {
-            player.maxHealth -= logic.quality;
+//            player.maxHealth -= logic.quality;
         }
 
         public static function activateBonus(player:Player, logic:RuneLogic):void
         {
-            player.maxHealth += logic.quality;
+//            player.maxHealth += logic.quality;
         }
 
     }

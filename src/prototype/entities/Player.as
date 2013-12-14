@@ -24,6 +24,7 @@ package prototype.entities
         private var _maxHealth:int;
         private var _damage:int;
         private var _gold:int;
+        private var _souls:int;
         private var _evocations:Dictionary;
 
         private var _activeEvocation:int = -1;
@@ -224,6 +225,18 @@ package prototype.entities
         public function set maxHealth(value:int):void
         {
             _maxHealth = value;
+            this.dispatchEvent(new PlayerEvent());
+
+        }
+
+        public function get souls():int
+        {
+            return _souls;
+        }
+
+        public function set souls(value:int):void
+        {
+            _souls = value;
             this.dispatchEvent(new PlayerEvent());
 
         }

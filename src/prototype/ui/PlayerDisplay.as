@@ -19,7 +19,8 @@ package prototype.ui
             _player = player;
 
             this.layout = new VerticalLayout();
-            if (alignRight) VerticalLayout(this.layout).horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_RIGHT;
+//            if (alignRight) VerticalLayout(this.layout).horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_RIGHT;
+            VerticalLayout(this.layout).horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_RIGHT;
 
             player.addEventListener(PlayerEvent.CHANGE, onChange);
 
@@ -90,6 +91,23 @@ package prototype.ui
             goldGroup.addChild(goldValueLabel);
 
             this.addChild(goldGroup);
+
+            var crystalGroup:LayoutGroup = new LayoutGroup();
+            crystalGroup.layout = horizontalLayout;
+
+            var crystalLabel:TextFieldTextRenderer = new TextFieldTextRenderer()
+            crystalLabel.background = true;
+            crystalLabel.backgroundColor = 0x333333;
+            crystalLabel.text = "Crystal:";
+            crystalGroup.addChild(crystalLabel);
+
+            var crystalValueLabel:TextFieldTextRenderer = new TextFieldTextRenderer()
+            crystalValueLabel.background = true;
+            crystalValueLabel.backgroundColor = 0x333333;
+            crystalValueLabel.text = _player.souls.toString();
+            crystalGroup.addChild(crystalValueLabel);
+
+            this.addChild(crystalGroup);
         }
     }
 }

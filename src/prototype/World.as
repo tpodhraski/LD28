@@ -7,6 +7,7 @@ package prototype
     import flash.events.MouseEvent;
 
     import flash.geom.Point;
+    import flash.geom.Rectangle;
     import flash.utils.Dictionary;
 
     import main.Main;
@@ -32,9 +33,10 @@ package prototype
     import starling.events.Touch;
     import starling.events.TouchEvent;
     import starling.events.TouchPhase;
+    import starling.extensions.QuadtreeSprite;
     import starling.textures.Texture;
 
-    public class World extends Sprite
+    public class World extends QuadtreeSprite
     {
         private var _level:Level;
 
@@ -49,6 +51,8 @@ package prototype
 
         public function World(level:Level, seed:int)
         {
+            super(new Rectangle(0, 0, level.width * 32, level.height * 32));
+
             _level = level;
             _random = new Xorshift();
             _random.randomize(seed % 1000);
@@ -82,11 +86,12 @@ package prototype
 
                     if (object == Evocation.CODE)
                     {
-                        createObject(Random.arrayElement(Evocation.EVOCATIONS), floor, i, j);
+
+                        createObject(Evocation.EVOCATIONS[_random.random() % Evocation.EVOCATIONS.length], floor, i, j);
                     }
                     if (object == Rune.CODE)
                     {
-                        createObject(Random.arrayElement(Rune.RUNES), floor, i, j);
+                        createObject(Rune.RUNES[_random.random() % Rune.RUNES.length], floor, i, j);
                     }
                 }
             }
@@ -176,7 +181,7 @@ package prototype
 
         public function removeObject(x:int, y:int):void
         {
-            _objectToLocation[uniqueId(x, y)].removeFromParent();
+            this.removeChild(_objectToLocation[uniqueId(x, y)]);
             delete _objectToLocation[uniqueId(x, y)];
         }
 

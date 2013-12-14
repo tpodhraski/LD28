@@ -1,7 +1,11 @@
 package prototype
 {
+    import Core.Geometry;
+
     import feathers.controls.LayoutGroup;
     import feathers.controls.ScrollContainer;
+
+    import flash.geom.Point;
 
     import flash.geom.Rectangle;
 
@@ -88,7 +92,14 @@ package prototype
             offsetY = (offsetY + offsetY2) / 2;
 
             var visibility:Rectangle = new Rectangle(-offsetX, -offsetY, this.stage.stageWidth / 2, this.stage.stageHeight);
-            _fogOfWar.visibleViewport = visibility;
+            visibility.inflate(64, 64)
+            var distance:Number = Point.distance(new Point(-offsetX, -offsetY), new Point(_fogOfWar.visibleViewport.x, _fogOfWar.visibleViewport.y));
+            if (distance > 60)
+            {
+                _fogOfWar.visibleViewport = visibility;
+                _worldRepresentation.visibleViewport = visibility;
+            }
+
 
             _fogOfWar.x = offsetX;
             _fogOfWar.y = offsetY;

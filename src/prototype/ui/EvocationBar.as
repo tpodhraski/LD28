@@ -6,7 +6,11 @@ package prototype.ui
     import feathers.core.ToggleGroup;
     import feathers.layout.HorizontalLayout;
 
+    import flash.geom.Point;
+
     import flash.utils.Dictionary;
+
+    import prototype.WorldSync;
 
     import prototype.entities.evocations.Evocation;
 
@@ -14,6 +18,9 @@ package prototype.ui
     import prototype.entities.PlayerEvent;
 
     import starling.events.Event;
+    import starling.events.Touch;
+    import starling.events.TouchEvent;
+    import starling.events.TouchPhase;
 
     public class EvocationBar extends LayoutGroup
     {
@@ -23,11 +30,18 @@ package prototype.ui
         private var evocationToButton:Dictionary;
         private var _toggleGroup:ToggleGroup;
         private var _playerOther:Player;
+        private var _tooltip:Tooltip;
 
-        public function EvocationBar(player:Player, playerOther:Player)
+        private var _evocations:Array;
+        private var _syncWorld:WorldSync;
+        private var _first:Boolean;
+
+        public function EvocationBar(player:Player, playerOther:Player, syncWorld:WorldSync, first:Boolean)
         {
             _player = player;
             _playerOther = playerOther;
+            _syncWorld = syncWorld;
+            _first = first;
             this.layout = new HorizontalLayout();
 
 
@@ -40,6 +54,8 @@ package prototype.ui
 //
 //            _buttonGroup = new ButtonGroup();
 
+            _evocations = [];
+
             var i:int = 0;
             for each (var evocation:Class in Evocation.EVOCATIONS)
             {
@@ -51,6 +67,7 @@ package prototype.ui
 
                 evocationToButton[i] = button;
 
+                _evocations.push(button);
                 _toggleGroup.addItem(button);
 
 //                function makeCallback(id:int):Function
@@ -68,15 +85,21 @@ package prototype.ui
 
 
             _player.addEventListener(PlayerEvent.CHANGE, onChange);
-            _player.addEventListener(PlayerEvent.CHANGE, onChange);
+            _playerOther.addEventListener(PlayerEvent.CHANGE, onChange);
             sync();
 
+            this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+        }
+
+        private function onAddedToStage(event:Event):void
+        {
+            this.stage.addEventListener(TouchEvent.TOUCH, onTouch);
         }
 
         private function onButtonChange(event:Event):void
         {
-            _player.activeEvocation = _toggleGroup.selectedIndex;
-            _playerOther.activeEvocation = _toggleGroup.selectedIndex;
+
+            _syncWorld.setActiveEvocation(_first, _toggleGroup.selectedIndex);
         }
 
         private function onChange(event:PlayerEvent):void
@@ -104,6 +127,40 @@ package prototype.ui
             }
 
             _toggleGroup.selectedIndex = _player.activeEvocation;
+        }
+
+        private function onTouch(event:TouchEvent):void
+        {
+
+            if (_tooltip)
+            {
+                _tooltip.removeFromParent();
+                _tooltip = null;
+            }
+
+            var i:int = 0;
+            for each (var button:Button in _evocations)
+            {
+                var touch:Touch = event.getTouch(button, TouchPhase.HOVER);
+                if (touch)
+                {
+
+
+                    _tooltip = new Tooltip(Evocation.EVOCATIONS[i].title, Evocation.EVOCATIONS[i].description);
+
+                    var location:Point = button.localToGlobal(new Point(0, 0));
+
+                    _tooltip.x = location.x;
+                    _tooltip.y = 350;
+
+
+
+                    this.stage.addChild(_tooltip);
+                }
+
+                i++;
+            }
+
         }
     }
 }
