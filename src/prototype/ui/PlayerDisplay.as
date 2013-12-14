@@ -14,11 +14,12 @@ package prototype.ui
     {
         private var _player:Player;
 
-        public function PlayerDisplay(player:Player)
+        public function PlayerDisplay(player:Player, alignRight:Boolean = false)
         {
             _player = player;
 
             this.layout = new VerticalLayout();
+            if (alignRight) VerticalLayout(this.layout).horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_RIGHT;
 
             player.addEventListener(PlayerEvent.CHANGE, onChange);
 
@@ -47,9 +48,10 @@ package prototype.ui
             healthLabel.text = "Health:";
             healthGroup.addChild(healthLabel);
 
-            for (var i:int = 0; i < _player.health; i++)
+            for (var i:int = 0; i < _player.maxHealth; i++)
             {
-                healthGroup.addChild(new Quad(16, 16, 0xff0000));
+                if (i < _player.health) healthGroup.addChild(new Quad(16, 16, 0xff0000));
+                else                    healthGroup.addChild(new Quad(16, 16, 0x550000));
             }
 
             this.addChild(healthGroup);

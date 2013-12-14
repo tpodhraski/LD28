@@ -171,6 +171,10 @@
             <filename>Tiles/E.png</filename>
             <filename>Tiles/F.png</filename>
             <filename>Markers/Evocation.png</filename>
+            <filename>Markers/Crystal.png</filename>
+            <filename>Markers/CrystalLight.png</filename>
+            <filename>Markers/Rune.png</filename>
+            <filename>Markers/Heart.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

@@ -2,6 +2,10 @@ package prototype.objects.traps
 {
     import main.Main;
 
+    import prototype.Xorshift;
+
+    import prototype.entities.evocations.EvocationJump;
+
     import prototype.entities.Player;
 
     public class TrapHole extends Trap
@@ -11,13 +15,28 @@ package prototype.objects.traps
         public function TrapHole(terrainId:int)
         {
             super(Main.testAtlas.getTexture("G"));
+
+            this.chance = 0.5;
+            this.damage = 1;
         }
 
-        override public function apply(player:Player):void
+        override public function apply(player:Player, random:Xorshift):Boolean
         {
-            super.apply(player);
+            if (player.currentEvocation == EvocationJump)
+            {
+                log("Jumpped!");
+                return false;
+            }
 
-            player.health -= 1;
+            if (super.apply(player, random))
+            {
+                player.health -= this.damage;
+                log("Bam!");
+                return true;
+            }
+
+            log("Success!");
+            return false;
         }
     }
 }

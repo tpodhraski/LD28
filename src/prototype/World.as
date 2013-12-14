@@ -1,6 +1,7 @@
 package prototype
 {
     import Core.Random;
+    import Core.Utility;
 
     import flash.events.Event;
     import flash.events.MouseEvent;
@@ -10,10 +11,15 @@ package prototype
 
     import main.Main;
 
-    import prototype.entities.EvocationJump;
+    import prototype.entities.evocations.Evocation;
+
+    import prototype.entities.evocations.EvocationJump;
 
     import prototype.entities.Player;
+    import prototype.entities.runes.Rune;
+    import prototype.objects.Crystal;
     import prototype.objects.items.ItemGold;
+    import prototype.objects.items.ItemHeart;
     import prototype.objects.traps.TrapHole;
 
     import prototype.objects.Wall;
@@ -39,10 +45,13 @@ package prototype
         private var _secondPlayer:Array = [];
 
         private var _objectToLocation:Dictionary;
+        private var _random:Xorshift;
 
-        public function World(level:Level)
+        public function World(level:Level, seed:int)
         {
             _level = level;
+            _random = new Xorshift();
+            _random.randomize(seed % 1000);
 
             _objectToLocation = new Dictionary();
 
@@ -50,7 +59,9 @@ package prototype
             objectMapping[Wall.CODE] = Wall;
             objectMapping[TrapHole.CODE] = TrapHole;
             objectMapping[ItemGold.CODE] = ItemGold;
-            objectMapping[EvocationJump.CODE] = EvocationJump;
+            objectMapping[ItemHeart.CODE] = ItemHeart;
+            objectMapping[Crystal.CODE] = Crystal;
+//            objectMapping[EvocationJump.CODE] = EvocationJump;
 
             for (var j:int = 0; j < _level.height; j++)
             {
@@ -62,14 +73,21 @@ package prototype
                     var object:uint = _level.objectAt(i, j);
                     if (object in objectMapping)
                     {
-                        var gameObject:DisplayObject = createObject(objectMapping[object], floor, i * 32, j * 32);
+                        createObject(objectMapping[object], floor, i, j);
 
-                        _objectToLocation[uniqueId(i, j)] = gameObject;
-                        this.addChild(gameObject);
                     }
 
                     if (object == Player.SPAWN_FIRST) _firstPlayer.push(new Point(i, j));
                     if (object == Player.SPAWN_SECOND) _secondPlayer.push(new Point(i, j));
+
+                    if (object == Evocation.CODE)
+                    {
+                        createObject(Random.arrayElement(Evocation.EVOCATIONS), floor, i, j);
+                    }
+                    if (object == Rune.CODE)
+                    {
+                        createObject(Random.arrayElement(Rune.RUNES), floor, i, j);
+                    }
                 }
             }
 
@@ -100,7 +118,7 @@ package prototype
         {
             if (x < 0 || x >= this.width || y < 0 || y >= this.height)
             {
-                trace("Clicked outside the level!");
+                log("Clicked outside the level!");
             }
             else
             {
@@ -136,12 +154,14 @@ package prototype
             return image;
         }
 
-        private function createObject(classObject:Class, terrainId:uint, x:Number, y:Number):Image
+        private function createObject(classObject:Class, terrainId:uint, x:Number, y:Number):void
         {
             var image:Image = new classObject(terrainId);
-            image.x = x;
-            image.y = y;
-            return image;
+            image.x = x * 32;
+            image.y = y * 32;
+            _objectToLocation[uniqueId(x, y)] = image;
+
+            this.addChild(image);
         }
 
         public function objectAt(x:int, y:int):DisplayObject
@@ -158,6 +178,11 @@ package prototype
         {
             _objectToLocation[uniqueId(x, y)].removeFromParent();
             delete _objectToLocation[uniqueId(x, y)];
+        }
+
+        public function get random():Xorshift
+        {
+            return _random;
         }
     }
 }

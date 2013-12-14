@@ -7,6 +7,10 @@ package prototype.objects.items
 
     public class Item extends Image
     {
+        public var title:String;
+        public var description:String;
+
+
         public function Item(texture:Texture)
         {
             super(texture);

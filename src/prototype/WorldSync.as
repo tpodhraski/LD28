@@ -3,10 +3,12 @@ package prototype
     import Core.Random;
     import Core.Utility;
 
-    import prototype.entities.Evocation;
-    import prototype.entities.EvocationJump;
+    import prototype.entities.evocations.Evocation;
+    import prototype.entities.evocations.EvocationJump;
 
     import prototype.entities.Player;
+    import prototype.entities.runes.Rune;
+    import prototype.objects.Crystal;
     import prototype.objects.items.Item;
     import prototype.objects.traps.Trap;
     import prototype.objects.Wall;
@@ -33,7 +35,10 @@ package prototype
         {
 //            if (event.primary) other(event.world).stimulatePoint(event.x, event.y, false);
 
-            var playerSelector:Function = (event.world == _worldFirst) ? player : playerOther;
+            function playerSelector(world:World):Player
+            {
+                return (event.world == _worldFirst) ? player(world) : playerOther(world);
+            }
 
             var canMove:Boolean = true;
 
@@ -60,6 +65,7 @@ package prototype
             var newY:int = Math.floor(playerSelector(_worldFirst).y / 32) + directionY;
 
 
+
             var object:DisplayObject = _worldFirst.objectAt(newX, newY);
             var objectOther:DisplayObject = _worldSecond.objectAt(newX, newY);
 
@@ -67,10 +73,9 @@ package prototype
             {
                 var trap:Trap = Trap(object);
                 var trapOther:Trap = Trap(objectOther);
-                //if (Math.random() < trap.chance)
 
-                trap.apply(playerSelector(_worldFirst));
-                trapOther.apply(playerSelector(_worldSecond));
+                trap.apply(playerSelector(_worldFirst), _worldFirst.random);
+                trapOther.apply(playerSelector(_worldSecond), _worldSecond.random);
             }
 
             if (object is Item)
@@ -90,11 +95,40 @@ package prototype
                 var evocation:Evocation = Evocation(object);
                 var evocationOther:Evocation = Evocation(objectOther);
 
-                playerSelector(_worldFirst).addEvocation(Object(evocation).constructor.CODE);
+                playerSelector(_worldFirst).addEvocation(Evocation.EVOCATIONS.indexOf(Object(evocation).constructor));
                 _worldFirst.removeObject(newX, newY);
 
-                playerSelector(_worldSecond).addEvocation(Object(evocationOther).constructor.CODE);
+                playerSelector(_worldSecond).addEvocation(Evocation.EVOCATIONS.indexOf(Object(evocationOther).constructor));
                 _worldSecond.removeObject(newX, newY);
+            }
+
+            if (object is Rune)
+            {
+                var rune:Rune = Rune(object);
+                var runeOther:Rune = Rune(objectOther);
+
+                playerSelector(_worldFirst).addRune(Rune.RUNES.indexOf(Object(rune).constructor));
+                _worldFirst.removeObject(newX, newY);
+
+                playerSelector(_worldSecond).addRune(Rune.RUNES.indexOf(Object(runeOther).constructor));
+                _worldSecond.removeObject(newX, newY);
+            }
+
+            if (object is Crystal)
+            {
+                var crystal:Crystal = Crystal(object);
+                var crystalOther:Crystal = Crystal(objectOther);
+
+                if (!crystal.charged)
+                {
+
+                    /// add points!
+
+                    crystal.charge();
+                    crystalOther.charge();
+                }
+
+                canMove = false;
             }
 
             if (object is Wall)
@@ -104,12 +138,21 @@ package prototype
 
             if (canMove)
             {
-                playerSelector(_worldFirst).x = newX * 32;
-                playerSelector(_worldFirst).y = newY * 32;
+                playerSelector(_worldFirst).changeLocation(newX * 32, newY * 32);
+                playerSelector(_worldSecond).changeLocation(newX * 32, newY * 32);
 
-                playerSelector(_worldSecond).x = newX * 32;
-                playerSelector(_worldSecond).y = newY * 32;
+                if (playerSelector(_worldFirst).activeEvocation != -1)
+                {
+                    playerSelector(_worldFirst).useEvocation(playerSelector(_worldFirst).activeEvocation)
+                    playerSelector(_worldSecond).useEvocation(playerSelector(_worldSecond).activeEvocation)
+
+                    playerSelector(_worldFirst).activeEvocation = -1;
+                    playerSelector(_worldSecond).activeEvocation = -1;
+                }
             }
+
+            playerSelector(_worldFirst).chargeRunes();
+            playerSelector(_worldSecond).chargeRunes();
         }
 
         private function other(world:World):World
