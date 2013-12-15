@@ -5,6 +5,8 @@ package prototype
     import flash.geom.Point;
     import flash.geom.Rectangle;
 
+    import main.Build;
+
     import starling.display.Quad;
     import starling.display.Sprite;
     import starling.extensions.QuadtreeSprite;
@@ -17,7 +19,7 @@ package prototype
 
         public function FogOfWar(level:Level)
         {
-            super(new Rectangle(0, 0, level.width * 32, level.height * 32));
+            super(new Rectangle(0, 0, level.width * Build.CELL_WIDTH, level.height * Build.CELL_HEIGHT));
 
             _level = level;
 
@@ -29,9 +31,9 @@ package prototype
                 for (var i:int = 0; i < _level.width; i++)
                 {
                     var index:int = j * _level.width + i;
-                    var quad:Quad = new Quad(32, 32, 0x000000);
-                    quad.x = i * 32;
-                    quad.y = j * 32;
+                    var quad:Quad = new Quad(Build.CELL_WIDTH, Build.CELL_HEIGHT, 0x000000);
+                    quad.x = i * Build.CELL_WIDTH;
+                    quad.y = j * Build.CELL_HEIGHT;
                     this.addChild(quad);
                     _cells[index] = quad;
                 }

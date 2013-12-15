@@ -58,7 +58,7 @@ package prototype
 
             this.layout = new AnchorLayout();
 
-            var seed:int = Math.random() * 10000;
+            var seed:int = 12312321;// Math.random() * 10000;
 
             _worldFirst = new World(_level, seed);
             _fogOfWarFirst = new FogOfWar(_level);

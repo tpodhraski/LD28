@@ -175,6 +175,8 @@
             <filename>Markers/CrystalLight.png</filename>
             <filename>Markers/Rune.png</filename>
             <filename>Markers/Heart.png</filename>
+            <filename>../../../Working/Area1/Area1Floor.png</filename>
+            <filename>../../../Working/Area1/Area1Wall.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

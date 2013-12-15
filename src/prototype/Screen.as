@@ -9,8 +9,12 @@ package prototype
 
     import flash.geom.Rectangle;
 
+    import main.Build;
+
     import prototype.entities.Player;
     import prototype.entities.PlayerEvent;
+
+    import starling.display.Quad;
 
     import starling.display.Sprite;
     import starling.events.EnterFrameEvent;
@@ -56,12 +60,12 @@ package prototype
 
         private function revealCharacter():void
         {
-            _fogOfWar.reveal(_worldRepresentation.first.x / 32, _worldRepresentation.first.y / 32, 4);
-            _fogOfWar.reveal(_worldRepresentation.second.x / 32, _worldRepresentation.second.y / 32, 4);
+            _fogOfWar.reveal(_worldRepresentation.first.x / Build.CELL_WIDTH, _worldRepresentation.first.y / Build.CELL_HEIGHT, 4);
+            _fogOfWar.reveal(_worldRepresentation.second.x / Build.CELL_WIDTH, _worldRepresentation.second.y / Build.CELL_HEIGHT, 4);
 
 
-            offsetX2 = -Math.max(0, _player.x / 32 - 6) * 32;
-            offsetY2 = -Math.max(0, _player.y / 32 - 4) * 32;
+            offsetX2 = -Math.max(0, _player.x / Build.CELL_WIDTH - 6) * Build.CELL_WIDTH;
+            offsetY2 = -Math.max(0, _player.y / Build.CELL_HEIGHT - 4) * Build.CELL_HEIGHT;
 
 
         }
@@ -101,11 +105,11 @@ package prototype
             }
 
 
-            _fogOfWar.x = offsetX;
-            _fogOfWar.y = offsetY;
+            _fogOfWar.x = Math.round(offsetX);
+            _fogOfWar.y = Math.round(offsetY);
 
-            _worldRepresentation.x = offsetX;
-            _worldRepresentation.y = offsetY;
+            _worldRepresentation.x = Math.round(offsetX);
+            _worldRepresentation.y = Math.round(offsetY);
         }
     }
 }

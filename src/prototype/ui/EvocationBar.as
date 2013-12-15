@@ -35,6 +35,7 @@ package prototype.ui
         private var _evocations:Array;
         private var _syncWorld:WorldSync;
         private var _first:Boolean;
+        private var _transfer:Button;
 
         public function EvocationBar(player:Player, playerOther:Player, syncWorld:WorldSync, first:Boolean)
         {
@@ -55,6 +56,13 @@ package prototype.ui
 //            _buttonGroup = new ButtonGroup();
 
             _evocations = [];
+
+            _transfer = new Button();
+            _transfer.label = "Transfer";
+            _transfer.width = 40;
+            _transfer.height = 40;
+            _transfer.addEventListener(Event.TRIGGERED, onTransfer);
+            this.addChild(_transfer);
 
             var i:int = 0;
             for each (var evocation:Class in Evocation.EVOCATIONS)
@@ -85,10 +93,15 @@ package prototype.ui
 
 
             _player.addEventListener(PlayerEvent.CHANGE, onChange);
-            _playerOther.addEventListener(PlayerEvent.CHANGE, onChange);
+//            _playerOther.addEventListener(PlayerEvent.CHANGE, onChange);
             sync();
 
             this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+        }
+
+        private function onTransfer(event:Event):void
+        {
+            _syncWorld.transfer(_first, _player.activeEvocation);
         }
 
         private function onAddedToStage(event:Event):void
@@ -98,7 +111,6 @@ package prototype.ui
 
         private function onButtonChange(event:Event):void
         {
-
             _syncWorld.setActiveEvocation(_first, _toggleGroup.selectedIndex);
         }
 
@@ -108,9 +120,13 @@ package prototype.ui
 
         }
 
+        public static const TRANSFER_PRICE:int = 1;
+
         public function sync():void
         {
-            this.removeChildren();
+            this.removeChildren(1);
+
+            _transfer.isEnabled = (_player.activeEvocation != -1) && (_player.gold >= TRANSFER_PRICE);
 
             var i:int = 0;
             for each (var evocation:Class in Evocation.EVOCATIONS)

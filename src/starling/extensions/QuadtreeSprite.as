@@ -81,6 +81,17 @@ package starling.extensions
             return child;
         }
 
+        public function sortQuad(func:Function):void
+        {
+            _dirty = true;
+
+            _children.sort(func);
+
+            for (var i:int = 0; i < _children.length; i++)
+                _childrenPositions[_children[i]] = i;
+
+        }
+
         public function get dynamicNumChildren():int
         {
             return _children.length;

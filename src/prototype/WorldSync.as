@@ -1,11 +1,14 @@
 package prototype
 {
-    import Core.Random;
     import Core.Utility;
 
+    import main.Build;
+
     import prototype.World;
 
     import prototype.World;
+    import prototype.entities.enemies.Enemy;
+    import prototype.ui.EvocationBar;
 
     import starling.events.Event;
 
@@ -50,8 +53,8 @@ package prototype
 
             if (event.data.message == "cellSelected")
             {
-                handleCellSelection(data.isFirst ? _worldFirst : _worldSecond, data.x, data.y);
                 sendToServerOnCellSelected_DO(data.isFirst ? _worldFirst : _worldSecond, data.x, data.y);
+                handleCellSelection(data.isFirst ? _worldFirst : _worldSecond, data.x, data.y);
             }
             if (event.data.message == "cellSelected_DO")
             {
@@ -60,12 +63,21 @@ package prototype
 
             if (event.data.message == "evocationChange")
             {
-                setActiveEvocationInternal(data.first, data.index);
                 Main.connection.send("evocationChange_DO", {first:data.first, index:data.index});
+                setActiveEvocationInternal(data.first, data.index);
             }
             if (event.data.message == "evocationChange_DO")
             {
                 setActiveEvocationInternal(data.first, data.index);
+            }
+            if (event.data.message == "evocationTransfer")
+            {
+                Main.connection.send("evocationTransfer_DO", {first:data.first, index:data.index});
+                transferInternal(data.first, data.index);
+            }
+            if (event.data.message == "evocationTransfer_DO")
+            {
+                transferInternal(data.first, data.index);
             }
         }
 
@@ -75,8 +87,8 @@ package prototype
 
             if (Main.isServer)
             {
-                handleCellSelection(event.world, event.x, event.y);
                 if (Main.connection) sendToServerOnCellSelected_DO(event.world, event.x, event.y);
+                handleCellSelection(event.world, event.x, event.y);
             }
             else
             {
@@ -112,8 +124,8 @@ package prototype
             var canMove:Boolean = true;
 
 
-            var eventPositionX:Number = x * 32;
-            var eventPositionY:Number = y * 32;
+            var eventPositionX:Number = x * Build.CELL_WIDTH;
+            var eventPositionY:Number = y * Build.CELL_HEIGHT;
 
             var directionX:Number = eventPositionX - playerSelector(_worldFirst).x;
             var directionY:Number = eventPositionY - playerSelector(_worldFirst).y;
@@ -130,8 +142,8 @@ package prototype
                 directionY = Utility.sign(directionY);
             }
 
-            var newX:int = Math.floor(playerSelector(_worldFirst).x / 32) + directionX;
-            var newY:int = Math.floor(playerSelector(_worldFirst).y / 32) + directionY;
+            var newX:int = Math.floor(playerSelector(_worldFirst).x / Build.CELL_WIDTH) + directionX;
+            var newY:int = Math.floor(playerSelector(_worldFirst).y / Build.CELL_HEIGHT) + directionY;
 
 
 
@@ -206,7 +218,7 @@ package prototype
 
                     if (newMin > _crystalPool)
                     {
-                        var diff:int = _crystalPool - newMin;
+                        var diff:int = newMin - _crystalPool;
 
                         this.crystalPool = newMin;
 
@@ -222,6 +234,26 @@ package prototype
                 canMove = false;
             }
 
+            if (object is Enemy)
+            {
+                var enemy:Enemy = Enemy(object);
+                var enemyOther:Enemy = Enemy(objectOther);
+
+                enemy.health -= playerSelector(_worldFirst).damage;
+                enemyOther.health -= playerSelector(_worldSecond).damage;
+                log("you hit the bastard ",playerSelector(_worldFirst).damage );
+
+                if (enemy.health <= 0)
+                {
+
+                    _worldFirst.removeEnemy(enemy);
+                    _worldSecond.removeEnemy(enemyOther);
+
+                }
+
+                canMove = false;
+            }
+
             if (object is Wall)
             {
                 canMove = false;
@@ -229,20 +261,138 @@ package prototype
 
             if (canMove)
             {
-                playerSelector(_worldFirst).changeLocation(newX * 32, newY * 32);
+                playerSelector(_worldFirst).changeLocation(newX * Build.CELL_WIDTH, newY * Build.CELL_HEIGHT);
                 _worldFirst.updateChild(playerSelector(_worldFirst));
-                playerSelector(_worldSecond).changeLocation(newX * 32, newY * 32);
+
+                playerSelector(_worldSecond).changeLocation(newX * Build.CELL_WIDTH, newY * Build.CELL_HEIGHT);
                 _worldSecond.updateChild(playerSelector(_worldSecond));
+
+                _worldFirst.sortObjects();
+                _worldSecond.sortObjects();
 
                 if (playerSelector(_worldFirst).activeEvocation != -1)
                 {
-                    playerSelector(_worldFirst).useEvocation(playerSelector(_worldFirst).activeEvocation)
-                    playerSelector(_worldSecond).useEvocation(playerSelector(_worldSecond).activeEvocation)
+                    playerSelector(_worldFirst).useEvocation(playerSelector(_worldFirst).activeEvocation);
+                    playerSelector(_worldSecond).useEvocation(playerSelector(_worldSecond).activeEvocation);
 
                     playerSelector(_worldFirst).activeEvocation = -1;
                     playerSelector(_worldSecond).activeEvocation = -1;
                 }
+
             }
+
+            runAI((world_ == _worldFirst));
+
+
+        }
+
+        private function runAI(isFirst:Boolean):void
+        {
+            function playerSelector(world:World):Player
+            {
+                return isFirst ? player(world) : playerOther(world);
+            }
+            function playerSelectorOther(world:World):Player
+            {
+                return isFirst? playerOther(world) : player(world);
+            }
+
+            var enemies:Array;
+            var enemiesOther:Array;
+            if (isFirst)
+            {
+                enemies = _worldFirst.getEnemies(-_worldFirst.x / Build.CELL_WIDTH - 1, -_worldFirst.y / Build.CELL_HEIGHT - 1, 17, 13);
+                enemiesOther = _worldSecond.getEnemies(-_worldFirst.x / Build.CELL_WIDTH - 1, -_worldFirst.y / Build.CELL_HEIGHT - 1, 17, 13);
+            }
+            else
+            {
+                enemies = _worldFirst.getEnemies(-_worldSecond.x / Build.CELL_WIDTH - 1, -_worldSecond.y / Build.CELL_HEIGHT - 1, 17, 13);
+                enemiesOther = _worldSecond.getEnemies(-_worldSecond.x / Build.CELL_WIDTH - 1, -_worldSecond.y / Build.CELL_HEIGHT - 1, 17, 13);
+
+            }
+
+//            var enemiesOther:Array = _worldFirst.;
+
+            /// find all enemies that are visible;
+
+
+            function doAI(enemy:Enemy,world:World):void
+            {
+                var directionX:Number = playerSelector(world).x - enemy.x;
+                var directionY:Number = playerSelector(world).y - enemy.y;
+                var directionX2:Number = directionX;
+                var directionY2:Number = directionY;
+
+                if (Math.abs(directionX) > Math.abs(directionY))
+                {
+                    directionX = Utility.sign(directionX);
+                    directionY = 0;
+
+                    directionX2 = 0;
+                    directionY2 = Utility.sign(directionY2);
+
+                }
+                else
+                {
+                    directionX = 0;
+                    directionY = Utility.sign(directionY);
+
+                    directionX2 = Utility.sign(directionX2);
+                    directionY2 = 0;
+                }
+
+                var newX:int = Math.floor( enemy.x / Build.CELL_WIDTH) + directionX;
+                var newY:int = Math.floor( enemy.y / Build.CELL_HEIGHT) + directionY;
+
+
+
+                var newX2:int = Math.floor( enemy.x / Build.CELL_WIDTH) + directionX2;
+                var newY2:int = Math.floor( enemy.y / Build.CELL_HEIGHT) + directionY2;
+
+                function collision(newX, newY):Boolean
+                {
+                    return world.objectAt(newX, newY) != null && !(world.objectAt(newX, newY) is Trap);
+
+                }
+
+                if (collision(newX, newY))
+                {
+                    newX = newX2;
+                    newY = newY2;
+                }
+
+                var playerx:int = Math.floor(playerSelector(world).x / Build.CELL_WIDTH);
+                var playery:int = Math.floor(playerSelector(world).y / Build.CELL_HEIGHT);
+
+                if (playerx == newX && playery == newY)
+                {
+                    log("enemy attacks you! ", enemy.damage);
+                    playerSelector(world).health -= enemy.damage;
+                }
+                //else if (trap)
+                else if (!collision(newX, newY))
+                {
+                    //// ...
+
+
+                    enemy.changeLocation(newX * Build.CELL_WIDTH, newY * Build.CELL_HEIGHT);
+                    world.updateChild(enemy);
+                }
+
+
+
+
+            }
+
+            for (var i:int = 0; i < enemies.length; i++)
+            {
+                var enemy:Enemy = enemies[i];
+                var enemyOther:Enemy = enemiesOther[i];
+
+                doAI(enemy, _worldFirst);
+                doAI(enemyOther, _worldSecond);
+            }
+
 
         }
 
@@ -285,30 +435,24 @@ package prototype
         {
             if (Main.isServer)
             {
-                setActiveEvocationInternal(_first, selectedIndex);
                 if (Main.connection) Main.connection.send("evocationChange_DO", {first:_first, index:selectedIndex});
+                setActiveEvocationInternal(_first, selectedIndex);
             }
             else
             {
                 Main.connection.send("evocationChange", {first:_first, index:selectedIndex});
-
             }
-
         }
 
         private function setActiveEvocationInternal(_first:Boolean, selectedIndex:int):void
         {
-            if (_first)
+            function selector(world:World):Player
             {
-                player(_worldFirst).activeEvocation = selectedIndex;
-                player(_worldSecond).activeEvocation = selectedIndex;
-            }
-            else
-            {
-                playerOther(_worldFirst).activeEvocation = selectedIndex;
-                playerOther(_worldSecond).activeEvocation = selectedIndex;
+                return _first ? player(world) : playerOther(world);
             }
 
+            selector(_worldFirst).activeEvocation = selectedIndex;
+            selector(_worldSecond).activeEvocation = selectedIndex;
         }
 
         public function get crystalPool():int
@@ -320,6 +464,46 @@ package prototype
         {
             _crystalPool = value;
             this.dispatchEventWith(Event.CHANGE);
+        }
+
+        public function transfer(_first:Boolean, activeEvocation:int):void
+        {
+            if (Main.isServer)
+            {
+                if (Main.connection) Main.connection.send("evocationTransfer_DO", {first:_first, index:activeEvocation});
+                transferInternal(_first, activeEvocation);
+            }
+            else
+            {
+                Main.connection.send("evocationTransfer", {first:_first, index:activeEvocation});
+            }
+
+        }
+
+        public function transferInternal(_first:Boolean, activeEvocation:int):void
+        {
+            function selector(world:World):Player
+            {
+                return _first ? player(world) : playerOther(world);
+            }
+            function selectorOther(world:World):Player
+            {
+                return _first ? playerOther(world) : player(world);
+            }
+
+            selector(_worldFirst).gold -= EvocationBar.TRANSFER_PRICE;
+            selector(_worldSecond).gold -= EvocationBar.TRANSFER_PRICE;
+
+
+            selector(_worldFirst).useEvocation(activeEvocation);
+            selector(_worldSecond).useEvocation(activeEvocation);
+
+            selectorOther(_worldFirst).addEvocation(activeEvocation);
+            selectorOther(_worldSecond).addEvocation(activeEvocation);
+
+            selector(_worldFirst).activeEvocation = -1;
+            selector(_worldSecond).activeEvocation = -1;
+
         }
     }
 }

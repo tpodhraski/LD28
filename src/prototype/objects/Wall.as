@@ -1,5 +1,6 @@
 package prototype.objects
 {
+    import main.Build;
     import main.Main;
 
     import starling.display.Image;
@@ -10,7 +11,8 @@ package prototype.objects
 
         public function Wall(terrainId:uint)
         {
-            super(Main.testAtlas.getTexture("2"));
+            super(Main.testAtlas.getTexture("Area1Wall"));
+            this.pivotY = this.height - Build.CELL_HEIGHT;
 
         }
     }
