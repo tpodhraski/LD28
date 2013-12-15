@@ -81,7 +81,7 @@ package prototype.ui
             var goldLabel:TextFieldTextRenderer = new TextFieldTextRenderer()
             goldLabel.background = true;
             goldLabel.backgroundColor = 0x333333;
-            goldLabel.text = "Gold:";
+            goldLabel.text = "Crystal:";
             goldGroup.addChild(goldLabel);
 
             var goldValueLabel:TextFieldTextRenderer = new TextFieldTextRenderer()
@@ -98,7 +98,7 @@ package prototype.ui
             var crystalLabel:TextFieldTextRenderer = new TextFieldTextRenderer()
             crystalLabel.background = true;
             crystalLabel.backgroundColor = 0x333333;
-            crystalLabel.text = "Crystal:";
+            crystalLabel.text = "Power:";
             crystalGroup.addChild(crystalLabel);
 
             var crystalValueLabel:TextFieldTextRenderer = new TextFieldTextRenderer()

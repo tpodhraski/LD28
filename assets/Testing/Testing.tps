@@ -149,7 +149,6 @@
         <key>fileList</key>
         <array>
             <filename>Cursor/Cursor.png</filename>
-            <filename>Markers/G.png</filename>
             <filename>Markers/H.png</filename>
             <filename>Markers/I.png</filename>
             <filename>Markers/J.png</filename>
@@ -177,6 +176,21 @@
             <filename>Markers/Heart.png</filename>
             <filename>../../../Working/Area1/Area1Floor.png</filename>
             <filename>../../../Working/Area1/Area1Wall.png</filename>
+            <filename>../../../Working/Area1/Area1Floor2.png</filename>
+            <filename>../../../Working/Area1/Area1Floor3.png</filename>
+            <filename>../../../Working/s1.png</filename>
+            <filename>../../../Working/s2.png</filename>
+            <filename>../../../Working/s3.png</filename>
+            <filename>../../../Working/s4.png</filename>
+            <filename>Markers/G.png</filename>
+            <filename>Markers/mon1.png</filename>
+            <filename>Markers/mon2.png</filename>
+            <filename>Markers/mon3.png</filename>
+            <filename>Markers/mon4.png</filename>
+            <filename>../../../Working/d1.png</filename>
+            <filename>../../../Working/d2.png</filename>
+            <filename>../../../Working/d3.png</filename>
+            <filename>../../../Working/d4.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

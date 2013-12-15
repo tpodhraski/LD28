@@ -21,6 +21,8 @@ package prototype
         {
             super(new Rectangle(0, 0, level.width * Build.CELL_WIDTH, level.height * Build.CELL_HEIGHT));
 
+            this.touchable = false;
+
             _level = level;
 
             _cells = [];
@@ -40,7 +42,7 @@ package prototype
             }
         }
 
-        public function reveal(x:int, y:int, cellsBounds:int):void
+        public function revealReal(x:int, y:int, cellsBounds:int):void
         {
             var b2:Number = cellsBounds * cellsBounds;
             var center:Point = new Point(x,y);
@@ -62,6 +64,37 @@ package prototype
                     }
                 }
             }
+
+        }
+        public function revealEffect(x:int, y:int, cellsBounds:int):void
+        {
+            var b2:Number = cellsBounds * cellsBounds;
+            var center:Point = new Point(x,y);
+
+            var minX:int = Math.max(0, x - cellsBounds);
+            var minY:int = Math.max(0, y - cellsBounds);
+
+            var maxX:int = Math.min(_level.width - 1, x + cellsBounds);
+            var maxY:int = Math.min(_level.width - 1, y + cellsBounds);
+
+            for (var j:int = minY; j <= maxY; j++)
+            {
+                for (var i:int = minX; i < maxX; i++)
+                {
+                    if (Geometry.distanceSquared(center, new Point(i, j)) < b2)
+                    {
+                        var index:int = j * _level.width + i;
+                        _cells[index].alpha = 0.75;
+                    }
+                }
+            }
+
+        }
+
+        public function reveal(x:int, y:int, cellsBounds:int):void
+        {
+            revealReal(x, y, cellsBounds - 1);
+            revealEffect(x, y, cellsBounds);
 
         }
     }

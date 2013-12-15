@@ -1,34 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:2b00ba1613a37ffe0419129333d6190c$ -->
+<!-- $TexturePacker:SmartUpdate:c039ba322f6617c344a94dac1b626866$ -->
 <TextureAtlas imagePath="Testing.png">
-    <SubTexture name="0" x="70" y="206" width="32" height="32"/>
-    <SubTexture name="1" x="70" y="172" width="32" height="32"/>
-    <SubTexture name="2" x="70" y="138" width="32" height="32"/>
-    <SubTexture name="3" x="70" y="104" width="32" height="32"/>
-    <SubTexture name="4" x="70" y="70" width="32" height="32"/>
-    <SubTexture name="5" x="206" y="36" width="32" height="32"/>
-    <SubTexture name="6" x="172" y="36" width="32" height="32"/>
-    <SubTexture name="7" x="138" y="36" width="32" height="32"/>
-    <SubTexture name="8" x="104" y="36" width="32" height="32"/>
-    <SubTexture name="9" x="70" y="36" width="32" height="32"/>
-    <SubTexture name="A" x="36" y="206" width="32" height="32"/>
-    <SubTexture name="Area1Floor" x="36" y="172" width="32" height="32"/>
-    <SubTexture name="Area1Wall" x="2" y="2" width="32" height="55"/>
-    <SubTexture name="B" x="36" y="138" width="32" height="32"/>
-    <SubTexture name="C" x="36" y="104" width="32" height="32"/>
-    <SubTexture name="Crystal" x="36" y="70" width="32" height="32"/>
-    <SubTexture name="CrystalLight" x="36" y="36" width="32" height="32"/>
-    <SubTexture name="Cursor" x="104" y="70" width="16" height="28"/>
-    <SubTexture name="D" x="206" y="2" width="32" height="32"/>
-    <SubTexture name="E" x="172" y="2" width="32" height="32"/>
-    <SubTexture name="Evocation" x="138" y="2" width="32" height="32"/>
-    <SubTexture name="F" x="104" y="2" width="32" height="32"/>
-    <SubTexture name="G" x="70" y="2" width="32" height="32"/>
-    <SubTexture name="H" x="36" y="2" width="32" height="32"/>
-    <SubTexture name="Heart" x="2" y="195" width="32" height="32"/>
-    <SubTexture name="I" x="2" y="161" width="32" height="32"/>
-    <SubTexture name="J" x="2" y="127" width="32" height="32"/>
-    <SubTexture name="K" x="2" y="93" width="32" height="32"/>
-    <SubTexture name="Rune" x="2" y="59" width="32" height="32"/>
+    <SubTexture name="0" x="36" y="242" width="32" height="32"/>
+    <SubTexture name="1" x="70" y="227" width="32" height="32"/>
+    <SubTexture name="2" x="104" y="221" width="32" height="32"/>
+    <SubTexture name="3" x="138" y="206" width="32" height="32"/>
+    <SubTexture name="4" x="172" y="204" width="32" height="32"/>
+    <SubTexture name="5" x="210" y="194" width="32" height="32"/>
+    <SubTexture name="6" x="2" y="210" width="32" height="32"/>
+    <SubTexture name="7" x="36" y="208" width="32" height="32"/>
+    <SubTexture name="8" x="70" y="193" width="32" height="32"/>
+    <SubTexture name="9" x="104" y="187" width="32" height="32"/>
+    <SubTexture name="A" x="138" y="172" width="32" height="32"/>
+    <SubTexture name="Area1Floor" x="176" y="170" width="32" height="32"/>
+    <SubTexture name="Area1Floor2" x="210" y="160" width="32" height="32"/>
+    <SubTexture name="Area1Floor3" x="2" y="176" width="32" height="32"/>
+    <SubTexture name="Area1Wall" x="74" y="68" width="32" height="55"/>
+    <SubTexture name="B" x="36" y="174" width="32" height="32"/>
+    <SubTexture name="C" x="70" y="159" width="32" height="32"/>
+    <SubTexture name="Crystal" x="142" y="68" width="32" height="34"/>
+    <SubTexture name="CrystalLight" x="2" y="72" width="32" height="51"/>
+    <SubTexture name="Cursor" x="2" y="274" width="16" height="28"/>
+    <SubTexture name="D" x="104" y="153" width="32" height="32"/>
+    <SubTexture name="E" x="142" y="138" width="32" height="32"/>
+    <SubTexture name="Evocation" x="176" y="136" width="32" height="32"/>
+    <SubTexture name="F" x="210" y="126" width="32" height="32"/>
+    <SubTexture name="G" x="70" y="125" width="32" height="32"/>
+    <SubTexture name="H" x="108" y="68" width="32" height="49"/>
+    <SubTexture name="Heart" x="2" y="244" width="26" height="28" frameX="-2" frameY="0" frameWidth="32" frameHeight="28"/>
+    <SubTexture name="I" x="108" y="119" width="32" height="32"/>
+    <SubTexture name="J" x="142" y="104" width="32" height="32"/>
+    <SubTexture name="K" x="176" y="102" width="32" height="32"/>
+    <SubTexture name="Rune" x="176" y="68" width="32" height="32"/>
+    <SubTexture name="d1" x="182" y="2" width="34" height="64" frameX="0" frameY="0" frameWidth="34" frameHeight="68"/>
+    <SubTexture name="d2" x="218" y="64" width="34" height="60" frameX="0" frameY="-2" frameWidth="34" frameHeight="68"/>
+    <SubTexture name="d3" x="146" y="2" width="34" height="64" frameX="0" frameY="0" frameWidth="34" frameHeight="68"/>
+    <SubTexture name="d4" x="38" y="2" width="34" height="68"/>
+    <SubTexture name="mon1" x="108" y="68" width="32" height="49"/>
+    <SubTexture name="mon2" x="2" y="125" width="32" height="49"/>
+    <SubTexture name="mon3" x="36" y="123" width="32" height="49"/>
+    <SubTexture name="mon4" x="36" y="72" width="32" height="49"/>
+    <SubTexture name="s1" x="110" y="2" width="34" height="64" frameX="0" frameY="0" frameWidth="34" frameHeight="68"/>
+    <SubTexture name="s2" x="218" y="2" width="34" height="60" frameX="0" frameY="-2" frameWidth="34" frameHeight="68"/>
+    <SubTexture name="s3" x="74" y="2" width="34" height="64" frameX="0" frameY="0" frameWidth="34" frameHeight="68"/>
+    <SubTexture name="s4" x="2" y="2" width="34" height="68"/>
 </TextureAtlas>

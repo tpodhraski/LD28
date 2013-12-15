@@ -8,6 +8,9 @@ package prototype
     import feathers.layout.AnchorLayout;
     import feathers.layout.AnchorLayoutData;
 
+    import flash.geom.Point;
+    import flash.utils.Dictionary;
+
     import main.Main;
 
     import prototype.entities.evocations.Evocation;
@@ -16,12 +19,18 @@ package prototype
 
     import prototype.ui.PlayerDisplay;
     import prototype.ui.RuneDisplay;
+    import prototype.ui.Tooltip;
+
+    import starling.display.DisplayObject;
 
     import starling.display.Image;
 
     import starling.display.Quad;
     import starling.display.Sprite;
     import starling.events.Event;
+    import starling.events.Touch;
+    import starling.events.TouchEvent;
+    import starling.events.TouchPhase;
 
     import treefortress.sound.SoundAS;
 
@@ -46,9 +55,17 @@ package prototype
         private var _fogOfWarFirst:FogOfWar;
         private var _fogOfWarSecond:FogOfWar;
         private var _shared:TextFieldTextRenderer;
+        private var _tooltip:Tooltip;
+        public static var descriptions:Dictionary;
+        public static var titles:Dictionary;
+        private var _lastTitle:String = null;
+        private var _lastDescription:String = null;
 
         public function Prototype()
         {
+            descriptions= new Dictionary();
+            titles = new Dictionary();
+
             Evocation.init();
             Rune.init();
 
@@ -81,6 +98,8 @@ package prototype
         private function onAddedToStage(event:Event):void
         {
             this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+
+            this.stage.addEventListener(TouchEvent.TOUCH, onTouch);
 
             _leftScreen = new Screen(_worldFirst.first, _worldFirst, _fogOfWarFirst, _world);
             _rightScreen = new Screen(_worldSecond.second, _worldSecond, _fogOfWarSecond, _world);
@@ -135,6 +154,68 @@ package prototype
             this.addChild(_shared);
 
             _world.addEventListener(Event.CHANGE, onChangeShared);
+
+
+        }
+
+        private function onTouch(event:TouchEvent):void
+        {
+            var touch:Touch = event.getTouch(DisplayObject(event.target), TouchPhase.HOVER);
+
+            trace(event.target)
+
+            if (DisplayObject(event.target).parent) trace(DisplayObject(event.target).parent);
+
+            function removeTooltip():void
+            {
+
+                if (_tooltip)
+                {
+                    _tooltip.removeFromParent();
+                    _tooltip = null;
+
+                    _lastTitle = null;
+                    _lastDescription = null;
+                }
+            }
+
+            if (touch)
+            {
+
+                var title:* = titles[event.target];
+                var description:* = descriptions[event.target];
+
+                if (title && description)
+                {
+
+                    if (title != _lastTitle || description != _lastDescription)
+                    {
+                        removeTooltip();
+
+                        _tooltip = new Tooltip(title, description);
+                        var location:Point = DisplayObject(event.target).localToGlobal(new Point(0, 0));
+
+                        _tooltip.x = location.x;
+                        _tooltip.y = 350;
+
+                        this.stage.addChild(_tooltip);
+
+                        _lastTitle = title;
+                        _lastDescription = description;
+                    }
+
+                }
+                else
+                {
+                    removeTooltip();
+
+                }
+            }
+            else
+            {
+                removeTooltip();
+
+            }
 
 
         }

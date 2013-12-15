@@ -3,9 +3,10 @@ package prototype.entities.enemies
     import main.Main;
 
     import starling.display.Image;
+    import starling.display.Sprite;
     import starling.textures.Texture;
 
-    public class Enemy extends Image
+    public class Enemy extends Sprite
     {
         public static var ENEMIES:Array = [EnemyEater];
 
@@ -14,9 +15,9 @@ package prototype.entities.enemies
         public var walk:int;
         public var walkRecharge:int;
 
-        public function Enemy(texture:Texture)
+        public function Enemy()
         {
-           super(texture);
+
 
         }
 

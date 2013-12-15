@@ -20,16 +20,18 @@ package
         private var myColor:uint;
         private var _connected:Boolean;
         public static const CONNECTED:String = "connected";
+        private var _code:String;
 
-        public function P2PClient2()
+        public function P2PClient2(code:String)
         {
+            _code = code;
             Logger.LEVEL = Logger.OWN;											// set Logger to only trace my traces
             initialize();
         }
 
         protected function initialize():void
         {
-            connection = new MultiUserSession(SERV_KEY, "multiuser/test"); 		// create a new instance of MultiUserSession
+            connection = new MultiUserSession(SERV_KEY, _code); 		// create a new instance of MultiUserSession
             connection.onConnect 		= handleConnect;						// set the method to be executed when connected
             connection.onUserAdded 		= handleUserAdded;						// set the method to be executed once a user has connected
             connection.onUserRemoved 	= handleUserRemoved;					// set the method to be executed once a user has disconnected

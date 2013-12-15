@@ -10,6 +10,8 @@ package prototype.ui
 
     import flash.utils.Dictionary;
 
+    import prototype.Prototype;
+
     import prototype.WorldSync;
 
     import prototype.entities.evocations.Evocation;
@@ -78,15 +80,9 @@ package prototype.ui
                 _evocations.push(button);
                 _toggleGroup.addItem(button);
 
-//                function makeCallback(id:int):Function
-//                {
-//                    return function(event:Event):void
-//                    {
-//                        buttonClick(id, event);
-//                    };
-//                }
-//
-//                button.addEventListener(Event.TRIGGERED, makeCallback(i));
+                Prototype.titles[button] = Evocation.EVOCATIONS[i].title;
+                Prototype.descriptions[button] = Evocation.EVOCATIONS[i].description;
+
 
                 i++;
             }
@@ -101,17 +97,21 @@ package prototype.ui
 
         private function onTransfer(event:Event):void
         {
-            _syncWorld.transfer(_first, _player.activeEvocation);
+
+                _syncWorld.transfer(_first, _player.activeEvocation);
+
         }
 
         private function onAddedToStage(event:Event):void
         {
-            this.stage.addEventListener(TouchEvent.TOUCH, onTouch);
         }
 
         private function onButtonChange(event:Event):void
         {
-            _syncWorld.setActiveEvocation(_first, _toggleGroup.selectedIndex);
+
+                _syncWorld.setActiveEvocation(_first, _toggleGroup.selectedIndex);
+
+
         }
 
         private function onChange(event:PlayerEvent):void
@@ -145,38 +145,5 @@ package prototype.ui
             _toggleGroup.selectedIndex = _player.activeEvocation;
         }
 
-        private function onTouch(event:TouchEvent):void
-        {
-
-            if (_tooltip)
-            {
-                _tooltip.removeFromParent();
-                _tooltip = null;
-            }
-
-            var i:int = 0;
-            for each (var button:Button in _evocations)
-            {
-                var touch:Touch = event.getTouch(button, TouchPhase.HOVER);
-                if (touch)
-                {
-
-
-                    _tooltip = new Tooltip(Evocation.EVOCATIONS[i].title, Evocation.EVOCATIONS[i].description);
-
-                    var location:Point = button.localToGlobal(new Point(0, 0));
-
-                    _tooltip.x = location.x;
-                    _tooltip.y = 350;
-
-
-
-                    this.stage.addChild(_tooltip);
-                }
-
-                i++;
-            }
-
-        }
     }
 }

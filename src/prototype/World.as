@@ -18,6 +18,7 @@ package prototype
     import prototype.objects.Wall;
     import prototype.objects.items.ItemGold;
     import prototype.objects.items.ItemHeart;
+    import prototype.objects.traps.Trap;
     import prototype.objects.traps.TrapHole;
     import prototype.terrain.Terrain;
 
@@ -69,7 +70,20 @@ package prototype
                 for (var i:int = 0; i < _level.width; i++)
                 {
                     var floor:uint = _level.floorAt(i, j);
-                    if (floor == Terrain.TERRAIN_SIMPLE_GROUND) this.addChild(createTile("Area1Floor", i * Build.CELL_WIDTH, j * Build.CELL_HEIGHT));
+                    if (floor == Terrain.TERRAIN_SIMPLE_GROUND) {
+                        var tile:String = "Area1Floor";
+
+                        if (random.randomPercent() < 0.1)
+                        {
+                            tile = "Area1Floor2";
+                        }
+                        if (random.randomPercent() < 0.01)
+                        {
+                            tile = "Area1Floor3";
+                        }
+
+                        this.addChild(createTile(tile, i * Build.CELL_WIDTH, j * Build.CELL_HEIGHT));
+                    }
                 }
             }
 
@@ -114,6 +128,9 @@ package prototype
 
                 if (a is FloorTile) aValue -= 100000;
                 if (b is FloorTile) bValue -= 100000;
+
+                if (a is Trap) aValue -= 10000;
+                if (b is Trap) bValue -= 10000;
 
 
                 return aValue - bValue;

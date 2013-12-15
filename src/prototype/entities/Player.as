@@ -2,6 +2,8 @@ package prototype.entities
 {
     import flash.utils.Dictionary;
 
+    import main.Build;
+
     import main.Main;
 
     import prototype.entities.evocations.Evocation;
@@ -12,9 +14,15 @@ package prototype.entities
     import prototype.entities.runes.RuneLogic;
     import prototype.entities.runes.RuneLogic;
 
-    import starling.display.Image;
+    import starling.core.Starling;
 
-    public class Player extends Image
+    import starling.display.Image;
+    import starling.display.MovieClip;
+    import starling.display.MovieClip;
+    import starling.display.Sprite;
+    import starling.textures.TextureSmoothing;
+
+    public class Player extends Sprite
     {
         public static const SPAWN_FIRST:uint = 0xff00fc;
         public static const SPAWN_SECOND:uint = 0x0066ff;
@@ -32,8 +40,18 @@ package prototype.entities
 
         public function Player(second:Boolean = false)
         {
-            super(Main.testAtlas.getTexture(second ? "J" : "I"));
+            var mc:MovieClip = new MovieClip(Main.testAtlas.getTextures(second ? "d" : "s"), 3);
+            mc.smoothing = TextureSmoothing.NONE;
+            mc.scaleX = mc.scaleY = 0.75;
+            mc.x += Math.floor((32 - 32 * mc.scaleX) / 2);
+            this.addChild(mc);
+            Starling.juggler.add(mc);
+
+
+            this.pivotY = this.height - Build.CELL_HEIGHT;
+
             _second = second;
+
 
             _evocations = new Dictionary();
 
