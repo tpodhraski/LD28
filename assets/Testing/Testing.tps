@@ -191,6 +191,7 @@
             <filename>../../../Working/d2.png</filename>
             <filename>../../../Working/d3.png</filename>
             <filename>../../../Working/d4.png</filename>
+            <filename>Markers/title.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
